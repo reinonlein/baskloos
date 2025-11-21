@@ -1,31 +1,101 @@
-# Next.js & Cloudinary example app
+# Baskloos - Foto Gallery
 
-This example shows how to create an image gallery site using Next.js, [Cloudinary](https://cloudinary.com), and [Tailwind](https://tailwindcss.com).
+Een moderne foto gallery website gebouwd met Next.js, Sanity CMS, en Tailwind CSS.
 
-## Deploy your own
+## Features
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or view the demo [here](https://nextconf-images.vercel.app/)
+- 🖼️ Responsive image gallery met blur placeholders
+- 📱 Volledig responsive design
+- ⚡ Geoptimaliseerd voor performance (AVIF/WebP support, compressie, caching)
+- 🎨 Modern UI met smooth animaties
+- 📸 Sanity CMS integratie voor content management
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-cloudinary&project-name=nextjs-image-gallery&repository-name=with-cloudinary&env=NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,CLOUDINARY_API_KEY,CLOUDINARY_API_SECRET,CLOUDINARY_FOLDER&envDescription=API%20Keys%20from%20Cloudinary%20needed%20to%20run%20this%20application.)
+## Tech Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **Next.js 16** - React framework met SSR/SSG
+- **Sanity CMS** - Headless CMS voor content management
+- **Tailwind CSS** - Utility-first CSS framework
+- **Framer Motion** - Animation library
+- **TypeScript** - Type safety
 
-## How to use
+## Setup
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
+### 1. Clone de repository
 
 ```bash
-npx create-next-app --example with-cloudinary with-cloudinary-app
+git clone <repository-url>
+cd baskloos
 ```
+
+### 2. Installeer dependencies
 
 ```bash
-yarn create next-app --example with-cloudinary with-cloudinary-app
+npm install
 ```
+
+### 3. Configureer environment variables
+
+Maak een `.env.local` bestand:
+
+```env
+NEXT_PUBLIC_SANITY_PROJECT_ID=your-project-id
+NEXT_PUBLIC_SANITY_DATASET=production
+```
+
+### 4. Run development server
 
 ```bash
-pnpm create next-app --example with-cloudinary with-cloudinary-app
+npm run dev
 ```
 
-## References
+Open [http://localhost:3000](http://localhost:3000) in je browser.
 
-- Cloudinary API: https://cloudinary.com/documentation/transformation_reference
+## Sanity Studio
+
+De Sanity Studio draait apart van de Next.js app:
+
+```bash
+# Lokale ontwikkeling
+npm run studio
+
+# Deploy naar Sanity
+npm run deploy-studio
+```
+
+Zie [DEPLOY_STUDIO.md](./DEPLOY_STUDIO.md) voor meer informatie.
+
+## Deploy naar Vercel
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
+
+1. Push je code naar GitHub
+2. Import het project in Vercel
+3. Voeg environment variables toe:
+   - `NEXT_PUBLIC_SANITY_PROJECT_ID`
+   - `NEXT_PUBLIC_SANITY_DATASET`
+4. Deploy!
+
+## Project Structuur
+
+```
+├── components/          # React components
+├── pages/              # Next.js pages
+├── public/             # Static assets
+├── schemaTypes/        # Sanity schema definities
+├── styles/             # Global styles
+├── utils/              # Utility functions
+└── sanity.config.ts    # Sanity configuratie
+```
+
+## Optimalisaties
+
+- ✅ Image optimization met Next.js Image component
+- ✅ AVIF/WebP format support
+- ✅ Blur placeholders voor betere UX
+- ✅ Static generation voor snelle laadtijden
+- ✅ Compressie en caching geconfigureerd
+- ✅ SWC minification
+
+## License
+
+MIT

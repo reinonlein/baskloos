@@ -1,11 +1,20 @@
 /* eslint-disable no-unused-vars */
 export interface ImageProps {
   id: number;
-  height: string;
-  width: string;
-  public_id: string;
-  format: string;
-  blurDataUrl?: string;
+  _id: string;
+  title: string;
+  image: {
+    asset?: {
+      _ref?: string;
+      _type?: string;
+    };
+    url?: string;
+  };
+  date: string;
+  category: string;
+  description: string;
+  width?: number;
+  height?: number;
 }
 
 export interface SharedModalProps {
@@ -16,4 +25,5 @@ export interface SharedModalProps {
   closeModal: () => void;
   navigation: boolean;
   direction?: number;
+  totalPhotos?: number;
 }
