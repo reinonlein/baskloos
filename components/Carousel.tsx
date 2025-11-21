@@ -38,36 +38,21 @@ export default function Carousel({
     router.push("/", undefined, { shallow: true });
   }
 
-  function changePhotoId(newPhotoId: number) {
-    if (!images) {
+  function changePhotoId(newVal: number) {
+    // Validate bounds
+    if (newVal < 0 || newVal >= totalPhotos) {
       return;
     }
-    
-    // Find the photo with the given ID
-    const newPhoto = images.find((img) => img.id === newPhotoId);
-    if (!newPhoto) {
-      return;
-    }
-    
-    // Find the index of the new photo
-    const newIndex = images.findIndex((img) => img.id === newPhotoId);
     
     // Set direction for animation
-    if (newIndex > index) {
+    if (newVal > index) {
       setDirection(1);
     } else {
       setDirection(-1);
     }
     
-    // Get category from current photo to maintain filter
-    const category = currentPhoto.category;
-    const query = category && category !== "all" ? { category } : {};
-    
-    // Navigate to the new photo page with category filter
-    router.push({
-      pathname: `/p/${newPhotoId}`,
-      query,
-    });
+    // Navigate to the new photo page
+    router.push(`/p/${newVal}`);
   }
 
   useKeypress("Escape", () => {
@@ -75,20 +60,14 @@ export default function Carousel({
   });
 
   useKeypress("ArrowRight", () => {
-    if (images && index + 1 < images.length) {
-      const nextPhoto = images[index + 1];
-      if (nextPhoto) {
-        changePhotoId(nextPhoto.id);
-      }
+    if (index + 1 < totalPhotos) {
+      changePhotoId(index + 1);
     }
   });
 
   useKeypress("ArrowLeft", () => {
-    if (images && index > 0) {
-      const prevPhoto = images[index - 1];
-      if (prevPhoto) {
-        changePhotoId(prevPhoto.id);
-      }
+    if (index > 0) {
+      changePhotoId(index - 1);
     }
   });
 

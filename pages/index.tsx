@@ -73,7 +73,6 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
         {photoId && (
           <Modal
             images={filteredImages}
-            selectedCategory={selectedCategory}
             onClose={() => {
               setLastViewedPhoto(photoId);
             }}
@@ -101,10 +100,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
           {filteredImages.map(({ id, image: imageData, title }) => (
             <Link
               key={id}
-              href={{
-                pathname: `/p/${id}`,
-                query: selectedCategory && selectedCategory !== "all" ? { category: selectedCategory } : {},
-              }}
+              href={`/p/${id}`}
               ref={id === Number(lastViewedPhoto) ? lastViewedPhotoRef : null}
               shallow
               className="after:content group relative mb-5 block w-full cursor-zoom-in after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"

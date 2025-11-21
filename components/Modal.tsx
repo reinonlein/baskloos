@@ -9,11 +9,9 @@ import SharedModal from "./SharedModal";
 export default function Modal({
   images,
   onClose,
-  selectedCategory,
 }: {
   images: ImageProps[];
   onClose?: () => void;
-  selectedCategory?: string;
 }) {
   let overlayRef = useRef();
   const router = useRouter();
@@ -51,11 +49,7 @@ export default function Modal({
       setDirection(-1);
     }
     setCurIndex(newIndex);
-    const query = selectedCategory && selectedCategory !== "all" ? { category: selectedCategory } : {};
-    router.push({
-      pathname: `/p/${newPhotoId}`,
-      query,
-    }, undefined, { shallow: true });
+    router.push(`/p/${newPhotoId}`, undefined, { shallow: true });
   }
 
   useKeypress("ArrowRight", () => {
