@@ -3,30 +3,32 @@
   "short_name": "BasKloos",
   "description": "De verzamelde werken - Bekijk de foto's van creatieve projecten en knutselwerken.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "icons": [
     {
       "src": "/favicon.ico",
-      "sizes": "any",
+      "sizes": "48x48",
       "type": "image/x-icon"
     },
     {
       "src": "/favicon.ico",
       "sizes": "192x192",
       "type": "image/x-icon",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "/favicon.ico",
       "sizes": "512x512",
       "type": "image/x-icon",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ],
   "categories": ["photography", "gallery", "art"],
-  "lang": "nl"
+  "lang": "nl",
+  "dir": "ltr"
 }
 
