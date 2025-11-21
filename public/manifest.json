@@ -1,5 +1,5 @@
 {
-  "name": "Bas Kloos - Art Gallery",
+  "name": "Bas Kloos",
   "short_name": "BasKloos",
   "description": "De verzamelde werken - Bekijk de foto's van creatieve projecten en knutselwerken.",
   "start_url": "/",
@@ -10,21 +10,21 @@
   "orientation": "any",
   "icons": [
     {
-      "src": "/bas_icon_48.jpg",
+      "src": "/bas_icon_48.png",
       "sizes": "48x48",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/bas_icon_192.jpg",
+      "src": "/bas_icon_192.png",
       "sizes": "192x192",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/bas_icon_512.jpg",
+      "src": "/bas_icon_512.png",
       "sizes": "512x512",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ],

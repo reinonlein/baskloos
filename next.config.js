@@ -4,7 +4,10 @@ const withPWA = require("next-pwa")({
   register: true,
   skipWaiting: true,
   sw: "sw.js",
-  buildExcludes: [/middleware-manifest\.json$/],
+  buildExcludes: [
+    /middleware-manifest\.json$/,
+    /_next\/dynamic-css-manifest\.json$/,
+  ],
   runtimeCaching: [
     {
       urlPattern: /^https:\/\/cdn\.sanity\.io\/.*/i,

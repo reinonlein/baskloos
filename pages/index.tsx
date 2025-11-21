@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useEffect, useRef, useState, useMemo } from "react";
 import Modal from "../components/Modal";
 import CategoryFilter from "../components/CategoryFilter";
+import InstallButton from "../components/InstallButton";
 import { getPhotos, getImageUrl } from "../utils/sanity";
 import type { ImageProps } from "../utils/types";
 import { useLastViewedPhoto } from "../utils/useLastViewedPhoto";
@@ -90,13 +91,14 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
               </p>
               <div className="relative h-40 w-40 overflow-hidden rounded-full border-2 border-white/20">
                 <Image
-                  src="/bas_icon_512.jpg"
+                  src="/bas_icon_512.png"
                   alt="Bas Kloos"
                   width={160}
                   height={160}
                   className="object-cover"
                 />
               </div>
+              <InstallButton />
             </div>
             
             <CategoryFilter
