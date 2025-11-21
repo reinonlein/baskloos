@@ -58,7 +58,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
   return (
     <>
       <Head>
-        <title>Baskloos - Foto Gallery</title>
+        <title>Bas Kloos - Art Gallery</title>
         <meta
           name="description"
           content="Bekijk de foto's van creatieve projecten en knutselwerken."
@@ -81,13 +81,24 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
         <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
           <div className="after:content relative mb-5 flex h-[629px] flex-col items-center justify-between overflow-hidden rounded-lg bg-white/10 px-6 py-16 text-center text-white shadow-highlight after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight">
             <div className="flex flex-col items-center gap-8">
+              
               <h1 className="text-base font-bold uppercase tracking-widest">
                 Bas Kloos
               </h1>
               <p className="max-w-[40ch] text-white/75 sm:max-w-[32ch]">
                 De verzamelde werken.
               </p>
+              <div className="relative h-40 w-40 overflow-hidden rounded-full border-2 border-white/20">
+                <Image
+                  src="/bas_icon_512.jpg"
+                  alt="Bas Kloos"
+                  width={160}
+                  height={160}
+                  className="object-cover"
+                />
+              </div>
             </div>
+            
             <CategoryFilter
               categories={categories}
               selectedCategory={selectedCategory}
