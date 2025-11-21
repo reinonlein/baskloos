@@ -4,6 +4,20 @@ const withPWA = require("next-pwa")({
   register: true,
   skipWaiting: true,
   sw: "sw.js",
+  buildExcludes: [/middleware-manifest\.json$/],
+  runtimeCaching: [
+    {
+      urlPattern: /^https:\/\/cdn\.sanity\.io\/.*/i,
+      handler: "NetworkFirst",
+      options: {
+        cacheName: "sanity-images",
+        expiration: {
+          maxEntries: 50,
+          maxAgeSeconds: 60 * 60 * 24, // 24 hours
+        },
+      },
+    },
+  ],
 });
 
 module.exports = withPWA({

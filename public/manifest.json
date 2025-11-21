@@ -12,19 +12,20 @@
     {
       "src": "/bas_icon_48.jpg",
       "sizes": "48x48",
-      "type": "image/jpeg"
+      "type": "image/jpeg",
+      "purpose": "any"
     },
     {
       "src": "/bas_icon_192.jpg",
       "sizes": "192x192",
       "type": "image/jpeg",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
       "src": "/bas_icon_512.jpg",
       "sizes": "512x512",
       "type": "image/jpeg",
-      "purpose": "any"
+      "purpose": "any maskable"
     }
   ],
   "categories": ["photography", "gallery", "art"],
