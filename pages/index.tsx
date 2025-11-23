@@ -176,5 +176,7 @@ export async function getStaticProps() {
     props: {
       images: reducedResults,
     },
+    // Revalidate every 60 seconds to show new photos faster
+    revalidate: 60,
   };
 }
