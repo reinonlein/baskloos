@@ -39,9 +39,11 @@ export default function Modal({
     onClose();
   }
 
-  function changePhotoId(newPhotoId: number) {
-    const newIndex = images.findIndex((img) => img.id === newPhotoId);
-    if (newIndex < 0) return;
+  function changePhotoId(newIndex: number) {
+    if (newIndex < 0 || newIndex >= images.length) return;
+    
+    const newPhoto = images[newIndex];
+    if (!newPhoto) return;
     
     if (newIndex > curIndex) {
       setDirection(1);
@@ -49,18 +51,23 @@ export default function Modal({
       setDirection(-1);
     }
     setCurIndex(newIndex);
-    router.push(`/p/${newPhotoId}`, undefined, { shallow: true });
+    
+    // Get current category from query if it exists
+    const { category } = router.query;
+    const categoryParam = category && category !== "all" ? `?category=${category}` : "";
+    
+    router.push(`/p/${newPhoto.id}${categoryParam}`, undefined, { shallow: true });
   }
 
   useKeypress("ArrowRight", () => {
     if (curIndex + 1 < images.length) {
-      changePhotoId(images[curIndex + 1].id);
+      changePhotoId(curIndex + 1);
     }
   });
 
   useKeypress("ArrowLeft", () => {
     if (curIndex > 0) {
-      changePhotoId(images[curIndex - 1].id);
+      changePhotoId(curIndex - 1);
     }
   });
 

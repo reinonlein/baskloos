@@ -33,9 +33,14 @@ export default function SharedModal({
     setLoaded(false);
   }, [index]);
 
-  let filteredImages = images?.filter((img: ImageProps) =>
-    range(index - 15, index + 15).includes(img.id),
-  );
+  // For the carousel, show images within a range of the current index
+  // Since images is already filtered, we use the index directly
+  // Note: range is exclusive at the end, so we add 1 to include the last image
+  const startRange = Math.max(0, index - 15);
+  const endRange = Math.min(images?.length || 0, index + 16); // +16 because range is exclusive
+  let filteredImages = images?.filter((_, imgIndex) =>
+    range(startRange, endRange).includes(imgIndex),
+  ) || [];
 
   // Determine max index based on images array or totalPhotos
   const maxIndex = images ? images.length - 1 : (totalPhotos ? totalPhotos - 1 : index);
@@ -207,41 +212,53 @@ export default function SharedModal({
                 className="mx-auto mt-6 mb-6 flex aspect-[3/2] h-14"
               >
                 <AnimatePresence initial={false}>
-                  {filteredImages.map(({ image, id }) => (
-                    <motion.button
-                      initial={{
-                        width: "0%",
-                        x: `${Math.max((index - 1) * -100, 15 * -100)}%`,
-                      }}
-                      animate={{
-                        scale: id === index ? 1.25 : 1,
-                        width: "100%",
-                        x: `${Math.max(index * -100, 15 * -100)}%`,
-                      }}
-                      exit={{ width: "0%" }}
-                      onClick={() => changePhotoId(id)}
-                      key={id}
-                      className={`${
-                        id === index
-                          ? "z-20 rounded-md shadow shadow-black/50"
-                          : "z-10"
-                      } ${id === 0 ? "rounded-l-md" : ""} ${
-                        id === (images?.length || 0) - 1 ? "rounded-r-md" : ""
-                      } relative inline-block w-full shrink-0 transform-gpu overflow-hidden focus:outline-none`}
-                    >
-                      <Image
-                        alt="small photos on the bottom"
-                        width={180}
-                        height={120}
+                  {filteredImages.map(({ image, id }, imgIndexInFiltered) => {
+                    // Find the index in the full images array (which may already be filtered)
+                    const actualIndex = images?.findIndex((img) => img.id === id) ?? imgIndexInFiltered;
+                    const isActive = actualIndex === index;
+                    const isFirst = actualIndex === 0;
+                    const isLast = actualIndex === (images?.length || 0) - 1;
+                    
+                    // Calculate the offset for the carousel scroll
+                    const startIndex = Math.max(0, index - 15);
+                    const relativeIndex = actualIndex - startIndex;
+                    
+                    return (
+                      <motion.button
+                        initial={{
+                          width: "0%",
+                          x: `${Math.max((index - startIndex - 1) * -100, 15 * -100)}%`,
+                        }}
+                        animate={{
+                          scale: isActive ? 1.25 : 1,
+                          width: "100%",
+                          x: `${Math.max((index - startIndex) * -100, 15 * -100)}%`,
+                        }}
+                        exit={{ width: "0%" }}
+                        onClick={() => changePhotoId(actualIndex)}
+                        key={id}
                         className={`${
-                          id === index
-                            ? "brightness-110 hover:brightness-110"
-                            : "brightness-50 contrast-125 hover:brightness-75"
-                        } h-full transform object-cover transition`}
-                        src={getImageUrl(image, 180, 70)}
-                      />
-                    </motion.button>
-                  ))}
+                          isActive
+                            ? "z-20 rounded-md shadow shadow-black/50"
+                            : "z-10"
+                        } ${isFirst ? "rounded-l-md" : ""} ${
+                          isLast ? "rounded-r-md" : ""
+                        } relative inline-block w-full shrink-0 transform-gpu overflow-hidden focus:outline-none`}
+                      >
+                        <Image
+                          alt="small photos on the bottom"
+                          width={180}
+                          height={120}
+                          className={`${
+                            isActive
+                              ? "brightness-110 hover:brightness-110"
+                              : "brightness-50 contrast-125 hover:brightness-75"
+                          } h-full transform object-cover transition`}
+                          src={getImageUrl(image, 180, 70)}
+                        />
+                      </motion.button>
+                    );
+                  })}
                 </AnimatePresence>
               </motion.div>
             </div>

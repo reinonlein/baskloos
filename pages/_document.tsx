@@ -23,12 +23,6 @@ class MyDocument extends Document {
             content="Bekijk de foto's van creatieve projecten en knutselwerken."
           />
           <meta property="og:title" content="Baskloos - Foto Gallery" />
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content="Baskloos - Foto Gallery" />
-          <meta
-            name="twitter:description"
-            content="Bekijk de foto's van creatieve projecten en knutselwerken."
-          />
         </Head>
         <body className="bg-black antialiased">
           <Main />

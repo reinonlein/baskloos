@@ -111,10 +111,10 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
           
           
           
-          {filteredImages.map(({ id, image: imageData, title }) => (
+          {filteredImages.map(({ id, image: imageData, title }, index) => (
             <Link
               key={id}
-              href={`/p/${id}`}
+              href={`/p/${id}${selectedCategory !== "all" ? `?category=${selectedCategory}` : ""}`}
               ref={id === Number(lastViewedPhoto) ? lastViewedPhotoRef : null}
               shallow
               className="after:content group relative mb-5 block w-full cursor-zoom-in after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"

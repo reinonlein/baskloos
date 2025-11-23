@@ -1,15 +1,29 @@
 import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import Carousel from "../../components/Carousel";
 import { getPhotos, getImageUrl } from "../../utils/sanity";
 import type { ImageProps } from "../../utils/types";
 
 const Home: NextPage = ({ currentPhoto, images, totalPhotos }: { currentPhoto: ImageProps; images: ImageProps[]; totalPhotos: number }) => {
   const router = useRouter();
-  const { photoId } = router.query;
-  let index = Number(photoId);
+  const { photoId, category } = router.query;
+  const photoIdNum = Number(photoId);
+  
+  // Filter images based on category query parameter
+  const filteredImages = useMemo(() => {
+    if (!category || category === "all") {
+      return images;
+    }
+    return images.filter((img) => img.category === category);
+  }, [images, category]);
+
+  // Find the index of the current photo in the filtered array
+  const filteredIndex = useMemo(() => {
+    const idx = filteredImages.findIndex((img) => img.id === photoIdNum);
+    return idx >= 0 ? idx : 0;
+  }, [filteredImages, photoIdNum]);
 
   const currentPhotoUrl = getImageUrl(currentPhoto.image, 2560, 90);
 
@@ -37,7 +51,7 @@ const Home: NextPage = ({ currentPhoto, images, totalPhotos }: { currentPhoto: I
       </Head>
       <div className="fixed inset-0 bg-black z-0" />
       <main className="mx-auto max-w-[1960px] p-4 relative z-10">
-        <Carousel currentPhoto={currentPhoto} images={images} index={index} totalPhotos={totalPhotos} />
+        <Carousel currentPhoto={currentPhoto} images={filteredImages} index={filteredIndex} totalPhotos={filteredImages.length} />
       </main>
     </>
   );

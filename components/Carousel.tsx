@@ -38,21 +38,29 @@ export default function Carousel({
     router.push("/", undefined, { shallow: true });
   }
 
-  function changePhotoId(newVal: number) {
+  function changePhotoId(newIndex: number) {
     // Validate bounds
-    if (newVal < 0 || newVal >= totalPhotos) {
+    if (!images || newIndex < 0 || newIndex >= images.length) {
       return;
     }
     
+    // Get the photo id from the filtered images array
+    const newPhoto = images[newIndex];
+    if (!newPhoto) return;
+    
     // Set direction for animation
-    if (newVal > index) {
+    if (newIndex > index) {
       setDirection(1);
     } else {
       setDirection(-1);
     }
     
-    // Navigate to the new photo page
-    router.push(`/p/${newVal}`);
+    // Get current category from query if it exists
+    const { category } = router.query;
+    const categoryParam = category && category !== "all" ? `?category=${category}` : "";
+    
+    // Navigate to the new photo page with the same filter
+    router.push(`/p/${newPhoto.id}${categoryParam}`);
   }
 
   useKeypress("Escape", () => {
@@ -60,7 +68,7 @@ export default function Carousel({
   });
 
   useKeypress("ArrowRight", () => {
-    if (index + 1 < totalPhotos) {
+    if (images && index + 1 < images.length) {
       changePhotoId(index + 1);
     }
   });
