@@ -5,7 +5,7 @@ class MyDocument extends Document {
     return (
       <Html lang="nl">
         <Head>
-          <link rel="icon" type="image/jpeg" href="/bas_icon_48.png" />
+          <link rel="icon" type="image/x-icon" href="/favicon.ico" />
           <link rel="apple-touch-icon" href="/bas_icon_192.png" />
           <link rel="manifest" href="/manifest.json" />
           <meta name="theme-color" content="#000000" />
