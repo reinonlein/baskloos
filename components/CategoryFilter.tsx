@@ -29,11 +29,10 @@ export default function CategoryFilter({
             backgroundRepeat: "no-repeat",
             backgroundSize: "1.5em 1.5em",
             paddingRight: "2.5rem",
-            textTransform: "capitalize",
           }}
         >
           <option value="all" className="bg-black text-white">
-            Alle kunstwerken
+            Alle kunst
           </option>
           {categories.map((category) => (
             <option
