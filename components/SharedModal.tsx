@@ -10,7 +10,7 @@ import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useSwipeable } from "react-swipeable";
-import { getImageUrl } from "../utils/sanity";
+import { getImageUrl } from "../utils/supabase";
 import { variants } from "../utils/animationVariants";
 import downloadPhoto from "../utils/downloadPhoto";
 import { range } from "../utils/range";
@@ -86,7 +86,7 @@ export default function SharedModal({
               style={{ willChange: 'transform, opacity' }}
             >
               <Image
-                src={getImageUrl(currentImage.image, navigation ? 1280 : 1920, 90)}
+                src={getImageUrl(currentImage.storage_path, currentImage.bucket_name, navigation ? 1280 : 1920, 90)}
                 width={navigation ? 1280 : 1920}
                 height={navigation ? 853 : 1280}
                 priority
@@ -169,7 +169,7 @@ export default function SharedModal({
               )}
               <div className="hidden md:flex absolute top-0 right-0 items-center gap-2 p-3 text-white">
                 <a
-                  href={getImageUrl(currentImage.image)}
+                  href={getImageUrl(currentImage.storage_path, currentImage.bucket_name)}
                   className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
                   target="_blank"
                   title="Open fullsize version"
@@ -180,7 +180,7 @@ export default function SharedModal({
                 <button
                   onClick={() =>
                     downloadPhoto(
-                      getImageUrl(currentImage.image),
+                      getImageUrl(currentImage.storage_path, currentImage.bucket_name),
                       `${index}.jpg`,
                     )
                   }
@@ -212,7 +212,7 @@ export default function SharedModal({
                 className="mx-auto mt-6 mb-6 flex aspect-[3/2] h-14"
               >
                 <AnimatePresence initial={false}>
-                  {filteredImages.map(({ image, id }, imgIndexInFiltered) => {
+                  {filteredImages.map(({ storage_path, bucket_name, id }, imgIndexInFiltered) => {
                     // Find the index in the full images array (which may already be filtered)
                     const actualIndex = images?.findIndex((img) => img.id === id) ?? imgIndexInFiltered;
                     const isActive = actualIndex === index;
@@ -254,7 +254,7 @@ export default function SharedModal({
                               ? "brightness-110 hover:brightness-110"
                               : "brightness-50 contrast-125 hover:brightness-75"
                           } h-full transform object-cover transition`}
-                          src={getImageUrl(image, 180, 70)}
+                          src={getImageUrl(storage_path, bucket_name, 180, 70)}
                         />
                       </motion.button>
                     );

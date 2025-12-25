@@ -3,13 +3,8 @@ export interface ImageProps {
   id: number;
   _id: string;
   title: string;
-  image: {
-    asset?: {
-      _ref?: string;
-      _type?: string;
-    };
-    url?: string;
-  };
+  storage_path: string;
+  bucket_name: string;
   date: string;
   category: string;
   description: string;

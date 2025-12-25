@@ -10,10 +10,10 @@ const withPWA = require("next-pwa")({
   ],
   runtimeCaching: [
     {
-      urlPattern: /^https:\/\/cdn\.sanity\.io\/.*/i,
+      urlPattern: /^https:\/\/.*\.supabase\.co\/storage\/v1\/object\/public\/.*/i,
       handler: "NetworkFirst",
       options: {
-        cacheName: "sanity-images",
+        cacheName: "supabase-images",
         expiration: {
           maxEntries: 50,
           maxAgeSeconds: 60 * 60 * 24, // 24 hours
@@ -29,8 +29,8 @@ module.exports = withPWA({
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "cdn.sanity.io",
-        pathname: "/images/**",
+        hostname: "*.supabase.co",
+        pathname: "/storage/v1/object/public/**",
       },
     ],
     formats: ["image/avif", "image/webp"],

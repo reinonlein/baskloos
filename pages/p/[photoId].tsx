@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useMemo } from "react";
 import Carousel from "../../components/Carousel";
-import { getPhotos, getImageUrl } from "../../utils/sanity";
+import { getPhotos, getImageUrl } from "../../utils/supabase";
 import type { ImageProps } from "../../utils/types";
 
 const Home: NextPage = ({ currentPhoto, images, totalPhotos }: { currentPhoto: ImageProps; images: ImageProps[]; totalPhotos: number }) => {
@@ -25,7 +25,7 @@ const Home: NextPage = ({ currentPhoto, images, totalPhotos }: { currentPhoto: I
     return idx >= 0 ? idx : 0;
   }, [filteredImages, photoIdNum]);
 
-  const currentPhotoUrl = getImageUrl(currentPhoto.image, 2560, 90);
+  const currentPhotoUrl = getImageUrl(currentPhoto.storage_path, currentPhoto.bucket_name, 2560, 90);
 
   // Ensure body background is black immediately
   useEffect(() => {
@@ -38,15 +38,15 @@ const Home: NextPage = ({ currentPhoto, images, totalPhotos }: { currentPhoto: I
   return (
     <>
       <Head>
-        <title>{`${currentPhoto.title || "Foto"} - Baskloos`}</title>
+        <title>{`${currentPhoto.title || "Foto"} - Bas Kloos`}</title>
         <meta
           name="description"
-          content={currentPhoto.description || `Bekijk ${currentPhoto.title || "deze foto"} op Baskloos.`}
+          content={currentPhoto.description || `Bekijk ${currentPhoto.title || "deze foto"} op Bas Kloos.`}
         />
-        <meta property="og:title" content={`${currentPhoto.title || "Foto"} - Baskloos`} />
+        <meta property="og:title" content={`${currentPhoto.title || "Foto"} - Bas Kloos`} />
         <meta property="og:image" content={currentPhotoUrl} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${currentPhoto.title || "Foto"} - Baskloos`} />
+        <meta name="twitter:title" content={`${currentPhoto.title || "Foto"} - Bas Kloos`} />
         <meta name="twitter:image" content={currentPhotoUrl} />
       </Head>
       <div className="fixed inset-0 bg-black z-0" />
@@ -67,12 +67,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
   for (let result of results) {
     reducedResults.push({
       id: i,
-      _id: result._id,
+      _id: result.id,
       title: result.title,
-      image: result.image,
+      storage_path: result.storage_path,
+      bucket_name: result.bucket_name,
       date: result.date,
       category: result.category,
-      description: result.description,
+      description: result.description || "",
     });
     i++;
   }

@@ -7,7 +7,7 @@ import { useEffect, useRef, useState, useMemo } from "react";
 import Modal from "../components/Modal";
 import CategoryFilter from "../components/CategoryFilter";
 import InstallButton from "../components/InstallButton";
-import { getPhotos, getImageUrl } from "../utils/sanity";
+import { getPhotos, getImageUrl } from "../utils/supabase";
 import type { ImageProps } from "../utils/types";
 import { useLastViewedPhoto } from "../utils/useLastViewedPhoto";
 
@@ -111,7 +111,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
           
           
           
-          {filteredImages.map(({ id, image: imageData, title }, index) => (
+          {filteredImages.map(({ id, storage_path, bucket_name, title }, index) => (
             <Link
               key={id}
               href={`/p/${id}${selectedCategory !== "all" ? `?category=${selectedCategory}` : ""}`}
@@ -125,7 +125,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
                 style={{ transform: "translate3d(0, 0, 0)" }}
                 placeholder="blur"
                 blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWEREiMxUf/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-                src={getImageUrl(imageData, 720, 80)}
+                src={getImageUrl(storage_path, bucket_name, 720, 80)}
                 width={720}
                 height={480}
                 sizes="(max-width: 640px) 100vw,
@@ -161,12 +161,13 @@ export async function getStaticProps() {
   for (let result of results) {
     reducedResults.push({
       id: i,
-      _id: result._id,
+      _id: result.id,
       title: result.title,
-      image: result.image,
+      storage_path: result.storage_path,
+      bucket_name: result.bucket_name,
       date: result.date,
       category: result.category,
-      description: result.description,
+      description: result.description || "",
     });
     i++;
   }
